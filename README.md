@@ -1,4 +1,4 @@
-# Opionionated Kafka Framework
+# Opinionated Kafka Framework
 
 Abstracts the Kafka Framework to add an opinionated view on how to use it.
 

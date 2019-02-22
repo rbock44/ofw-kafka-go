@@ -63,9 +63,23 @@ type RateLimiter struct {
 	LimitPerSecond int64
 }
 
-//Check checks the rate limit and returns the time it needs to idle
-func (r *RateLimiter) Check(checkTime time.Time) time.Duration {
+//NewRateLimiter creates a RateLimiter which can be used with a producer implementation
+func NewRateLimiter(limitPerSecond int) *RateLimiter {
+	return &RateLimiter{
+		StartTime:      time.Now(),
+		LimitPerSecond: int64(limitPerSecond),
+	}
+}
+
+//IncrementMessageCount increments the message count
+func (r *RateLimiter) IncrementMessageCount() {
 	r.MessageCount++
+}
+
+// Check does
+// - check the rate limit
+// - return the time it needs to idle in case message count is reached
+func (r *RateLimiter) Check(checkTime time.Time) time.Duration {
 	elapsedTime := checkTime.Sub(r.StartTime)
 	if elapsedTime > time.Second {
 		//reset as second is over

@@ -20,6 +20,7 @@ func createRateLimiter(start time.Time) *RateLimiter {
 func TestRateLimiter_CheckCounterBelowTimeBelow(t *testing.T) {
 	now := time.Now()
 	rl := createRateLimiter(now)
+	rl.IncrementMessageCount()
 	idleTime := rl.Check(now)
 
 	assert.Equal(t, time.Duration(0), idleTime)
@@ -29,6 +30,7 @@ func TestRateLimiter_CheckCounterLimitTimeBelow(t *testing.T) {
 	now := time.Now()
 	rl := createRateLimiter(now)
 	rl.MessageCount = testLimit
+	rl.IncrementMessageCount()
 	idleTime := rl.Check(now)
 	assert.Equal(t, time.Second, idleTime)
 }
@@ -37,6 +39,7 @@ func TestRateLimiter_CheckCounterLimitTimeBelow20ms(t *testing.T) {
 	now := time.Now()
 	rl := createRateLimiter(now)
 	rl.MessageCount = testLimit
+	rl.IncrementMessageCount()
 	idleTime := rl.Check(now.Add(time.Second - time.Millisecond*20))
 	assert.Equal(t, time.Millisecond*20, idleTime)
 }
@@ -45,6 +48,7 @@ func TestRateLimiter_CheckCounterLimitTimeAbove(t *testing.T) {
 	now := time.Now()
 	rl := createRateLimiter(now)
 	rl.MessageCount = testLimit
+	rl.IncrementMessageCount()
 	aboveOneSecond := now.Add(time.Second + time.Millisecond*20)
 	idleTime := rl.Check(aboveOneSecond)
 	assert.Equal(t, time.Duration(0), idleTime)

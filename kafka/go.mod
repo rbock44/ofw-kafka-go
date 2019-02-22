@@ -1,4 +1,4 @@
-module github.com/rbock44/ofw-kafka-go/kafka
+module github.com/rbock44/okfw-kafka-go/kafka
 
 require (
 	github.com/AndreasBriese/bbloom v0.0.0-20180913140656-343706a395b7 // indirect

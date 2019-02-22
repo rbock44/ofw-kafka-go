@@ -1,4 +1,7 @@
 GO=GO111MODULE=on go
+
+all: update bench test
+
 update:
 	cd kafka && $(GO) mod vendor
 

@@ -7,7 +7,7 @@ require (
 	github.com/golang/mock v1.2.0
 	github.com/golang/protobuf v1.2.0 // indirect
 	github.com/google/pprof v0.0.0-20190109223431-e84dfd68c163 // indirect
-	github.com/landoop/schema-registry v0.0.0-20181115093143-9861c67a815b // indirect
+	github.com/landoop/schema-registry v0.0.0-20181115093143-9861c67a815b
 	github.com/linkedin/goavro v0.0.0-20190107154434-af12b3c46392 // indirect
 	github.com/pkg/errors v0.8.1 // indirect
 	github.com/stretchr/testify v1.3.0

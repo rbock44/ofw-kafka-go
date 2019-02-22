@@ -10,12 +10,6 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-type testDecoderType struct{}
-
-func (d *testDecoderType) Decode(reader io.Reader) (interface{}, error) {
-	return "test", nil
-}
-
 func Test_ReadMessage_KeyValue(t *testing.T) {
 	ctrl := gomock.NewController(t)
 	defer ctrl.Finish()

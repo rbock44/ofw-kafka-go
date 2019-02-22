@@ -2,7 +2,7 @@ package kafka
 
 import "io"
 
-//go:generate mockgen -source api.go -destination mock_test.go -package kafka
+//go:generate mockgen -source api.go -destination mock_api_test.go -package kafka MessageConsumer,MessageProducer,MessageSchema,Decoder,Encoder,Registry
 
 //MessageSchema hold the schema of the message
 type MessageSchema interface {

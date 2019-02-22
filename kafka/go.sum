@@ -9,6 +9,7 @@ github.com/golang/mock v1.2.0/go.mod h1:oTYuIxOrZwtPieC+H1uAHpcLFnEyAGVDL/k47Jfb
 github.com/golang/protobuf v1.2.0/go.mod h1:6lQm79b+lXiMfvg/cZm0SGofjICqVBUtrP5yJMmIC1U=
 github.com/golang/snappy v0.0.0-20180518054509-2e65f85255db/go.mod h1:/XxbfmMg8lxefKM7IXC3fBNl/7bRcc72aCRzEWrmP2Q=
 github.com/google/pprof v0.0.0-20190109223431-e84dfd68c163/go.mod h1:zfwlbNMJ+OItoe0UupaVj+oy1omPYYDuagoSzA8v9mc=
+github.com/landoop/schema-registry v0.0.0-20181115093143-9861c67a815b h1:68gYpPcRBMv6rKzLUkcHTUQ9rkrPShLyCzEwGVctGDM=
 github.com/landoop/schema-registry v0.0.0-20181115093143-9861c67a815b/go.mod h1:yITyTTMx2IS5mpfZjQ64gJhL5U5RvcorFBu+z4/euXg=
 github.com/linkedin/goavro v0.0.0-20190107154434-af12b3c46392/go.mod h1:vL3ODoWTPCBSeKVFgQ+lvSq0VOzTB5TcXvUX+4pU/+Q=
 github.com/pkg/errors v0.8.1/go.mod h1:bwawxfHBFNV+L2hUp1rHADufV3IMtnDRdf1r5NINEl0=

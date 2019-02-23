@@ -7,53 +7,40 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-var testLimit = int64(3)
+var testLimit = 3
+var testAboveLimit = int64(4)
 
-func createRateLimiter(start time.Time) *RateLimiter {
-	return &RateLimiter{
-		StartTime:      start,
-		MessageCount:   0,
-		LimitPerSecond: testLimit,
-	}
-}
-
-func TestRateLimiter_CheckCounterBelowTimeBelow(t *testing.T) {
+func TestRateLimiter_CheckCounterStartTimeBelowLimit(t *testing.T) {
 	now := time.Now()
-	rl := createRateLimiter(now)
-	rl.IncrementMessageCount()
-	idleTime := rl.Check(now)
+	rl := NewRateLimiter(testLimit)
+	rl.StartTime = now
+	idleTime := rl.Check(now, 0)
 
 	assert.Equal(t, time.Duration(0), idleTime)
 }
 
-func TestRateLimiter_CheckCounterLimitTimeBelow(t *testing.T) {
+func TestRateLimiter_CheckCounterStartTimeAboveLimit(t *testing.T) {
 	now := time.Now()
-	rl := createRateLimiter(now)
-	rl.MessageCount = testLimit
-	rl.IncrementMessageCount()
-	idleTime := rl.Check(now)
+	rl := NewRateLimiter(testLimit)
+	rl.StartTime = now
+	idleTime := rl.Check(now, testAboveLimit)
 	assert.Equal(t, time.Second, idleTime)
 }
 
-func TestRateLimiter_CheckCounterLimitTimeBelow20ms(t *testing.T) {
+func TestRateLimiter_CheckCounterRemainingTime20msAboveLimit(t *testing.T) {
 	now := time.Now()
-	rl := createRateLimiter(now)
-	rl.MessageCount = testLimit
-	rl.IncrementMessageCount()
-	idleTime := rl.Check(now.Add(time.Second - time.Millisecond*20))
+	rl := NewRateLimiter(testLimit)
+	rl.StartTime = now
+	idleTime := rl.Check(now.Add(time.Second-time.Millisecond*20), testAboveLimit)
 	assert.Equal(t, time.Millisecond*20, idleTime)
 }
 
-func TestRateLimiter_CheckCounterLimitTimeAbove(t *testing.T) {
+func TestRateLimiter_CheckCounterAboveTime(t *testing.T) {
 	now := time.Now()
-	rl := createRateLimiter(now)
-	rl.MessageCount = testLimit
-	rl.IncrementMessageCount()
-	aboveOneSecond := now.Add(time.Second + time.Millisecond*20)
-	idleTime := rl.Check(aboveOneSecond)
+	rl := NewRateLimiter(testLimit)
+	rl.StartTime = now
+	idleTime := rl.Check(now.Add(time.Second+time.Millisecond*20), testAboveLimit)
 	assert.Equal(t, time.Duration(0), idleTime)
-	assert.Equal(t, int64(0), rl.MessageCount)
-	assert.Equal(t, aboveOneSecond.Format(time.RFC3339), rl.StartTime.Format(time.RFC3339))
 }
 
 type testRateCounter struct{ Counter int64 }

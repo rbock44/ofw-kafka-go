@@ -58,8 +58,8 @@ func (r *RateReporter) calculateRatePerSecond(currentCount int64, lastCount int6
 
 //RateLimiter restricts the rate to max messages per second
 type RateLimiter struct {
+	LastResetCount int64
 	StartTime      time.Time
-	MessageCount   int64
 	LimitPerSecond int64
 }
 
@@ -71,23 +71,19 @@ func NewRateLimiter(limitPerSecond int) *RateLimiter {
 	}
 }
 
-//IncrementMessageCount increments the message count
-func (r *RateLimiter) IncrementMessageCount() {
-	r.MessageCount++
-}
-
 // Check does
 // - check the rate limit
 // - return the time it needs to idle in case message count is reached
-func (r *RateLimiter) Check(checkTime time.Time) time.Duration {
+func (r *RateLimiter) Check(checkTime time.Time, messageCount int64) time.Duration {
 	elapsedTime := checkTime.Sub(r.StartTime)
 	if elapsedTime > time.Second {
 		//reset as second is over
-		r.MessageCount = 0
+		r.LastResetCount = messageCount
 		r.StartTime = checkTime
 		return 0
 	}
-	if r.MessageCount <= r.LimitPerSecond {
+	messageDiff := messageCount - r.LastResetCount
+	if messageDiff <= r.LimitPerSecond {
 		if elapsedTime < time.Second {
 			return 0
 		}
@@ -99,7 +95,7 @@ func (r *RateLimiter) Check(checkTime time.Time) time.Duration {
 		return remainingTime
 	}
 	//reset as we second is over
-	r.MessageCount = 0
+	r.LastResetCount = 0
 	r.StartTime = checkTime
 
 	return 0

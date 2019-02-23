@@ -34,10 +34,10 @@ func Test_Registry_Register(t *testing.T) {
 	f := NewMockProvider(ctrl)
 	f.EXPECT().
 		NewSchemaResolver().
-		Return(setupTestResolver(ctrl))
+		Return(setupTestResolver(ctrl), nil)
 	SetFrameworkFactory(f)
 
-	registry := NewSchemaRegistry()
+	registry, _ := NewSchemaRegistry()
 
 	schema, err := registry.Register(testSchema.Subject, testSchema.Version, testSchemaFile, testDecoder, testEncoder)
 	if assert.Nil(t, err) {
@@ -54,10 +54,10 @@ func Test_Registry_Lookup(t *testing.T) {
 	f := NewMockProvider(ctrl)
 	f.EXPECT().
 		NewSchemaResolver().
-		Return(setupTestResolver(ctrl))
+		Return(setupTestResolver(ctrl), nil)
 	SetFrameworkFactory(f)
 
-	registry := NewSchemaRegistry()
+	registry, _ := NewSchemaRegistry()
 	schema, err := registry.Lookup(testSchema.Subject, testSchema.Version)
 	if assert.Nil(t, err) {
 		if assert.NotNil(t, schema) {
@@ -73,10 +73,10 @@ func Test_Registry_GetSchemaByID(t *testing.T) {
 	f := NewMockProvider(ctrl)
 	f.EXPECT().
 		NewSchemaResolver().
-		Return(setupTestResolver(ctrl))
+		Return(setupTestResolver(ctrl), nil)
 	SetFrameworkFactory(f)
 
-	registry := NewSchemaRegistry()
+	registry, _ := NewSchemaRegistry()
 	var testSchemaFile = "test.avsc"
 
 	schema, err := registry.Register(testSchema.Subject, testSchema.Version, testSchemaFile, testDecoder, testEncoder)
@@ -102,10 +102,10 @@ func Test_Registry_GetSchemaByName(t *testing.T) {
 	f := NewMockProvider(ctrl)
 	f.EXPECT().
 		NewSchemaResolver().
-		Return(setupTestResolver(ctrl))
+		Return(setupTestResolver(ctrl), nil)
 	SetFrameworkFactory(f)
 
-	registry := NewSchemaRegistry()
+	registry, _ := NewSchemaRegistry()
 
 	var testSchemaFile = "test.avsc"
 

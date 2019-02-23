@@ -485,11 +485,12 @@ func (mr *MockProviderMockRecorder) NewProducer(topic, clientID interface{}) *go
 }
 
 // NewSchemaResolver mocks base method
-func (m *MockProvider) NewSchemaResolver() SchemaResolver {
+func (m *MockProvider) NewSchemaResolver() (SchemaResolver, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "NewSchemaResolver")
 	ret0, _ := ret[0].(SchemaResolver)
-	return ret0
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
 }
 
 // NewSchemaResolver indicates an expected call of NewSchemaResolver

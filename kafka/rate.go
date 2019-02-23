@@ -63,8 +63,7 @@ type RateLimiter struct {
 	LimitPerSecond int64
 }
 
-//NewRateLimiter creates a RateLimiter which can be used with a producer implementation
-func NewRateLimiter(limitPerSecond int) *RateLimiter {
+func newRateLimiter(limitPerSecond int) *RateLimiter {
 	return &RateLimiter{
 		StartTime:      time.Now(),
 		LimitPerSecond: int64(limitPerSecond),

@@ -12,7 +12,7 @@ var testAboveLimit = int64(4)
 
 func TestRateLimiter_CheckCounterStartTimeBelowLimit(t *testing.T) {
 	now := time.Now()
-	rl := NewRateLimiter(testLimit)
+	rl := newRateLimiter(testLimit)
 	rl.StartTime = now
 	idleTime := rl.Check(now, 0)
 
@@ -21,7 +21,7 @@ func TestRateLimiter_CheckCounterStartTimeBelowLimit(t *testing.T) {
 
 func TestRateLimiter_CheckCounterStartTimeAboveLimit(t *testing.T) {
 	now := time.Now()
-	rl := NewRateLimiter(testLimit)
+	rl := newRateLimiter(testLimit)
 	rl.StartTime = now
 	idleTime := rl.Check(now, testAboveLimit)
 	assert.Equal(t, time.Second, idleTime)
@@ -29,7 +29,7 @@ func TestRateLimiter_CheckCounterStartTimeAboveLimit(t *testing.T) {
 
 func TestRateLimiter_CheckCounterRemainingTime20msAboveLimit(t *testing.T) {
 	now := time.Now()
-	rl := NewRateLimiter(testLimit)
+	rl := newRateLimiter(testLimit)
 	rl.StartTime = now
 	idleTime := rl.Check(now.Add(time.Second-time.Millisecond*20), testAboveLimit)
 	assert.Equal(t, time.Millisecond*20, idleTime)
@@ -37,7 +37,7 @@ func TestRateLimiter_CheckCounterRemainingTime20msAboveLimit(t *testing.T) {
 
 func TestRateLimiter_CheckCounterAboveTime(t *testing.T) {
 	now := time.Now()
-	rl := NewRateLimiter(testLimit)
+	rl := newRateLimiter(testLimit)
 	rl.StartTime = now
 	idleTime := rl.Check(now.Add(time.Second+time.Millisecond*20), testAboveLimit)
 	assert.Equal(t, time.Duration(0), idleTime)

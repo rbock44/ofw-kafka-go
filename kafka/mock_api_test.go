@@ -344,18 +344,18 @@ func (mr *MockMessageProducerMockRecorder) SendKeyValue(key, value interface{}) 
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SendKeyValue", reflect.TypeOf((*MockMessageProducer)(nil).SendKeyValue), key, value)
 }
 
-// GetRateCounter mocks base method
-func (m *MockMessageProducer) GetRateCounter() *int64 {
+// GetMessageCounter mocks base method
+func (m *MockMessageProducer) GetMessageCounter() *int64 {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "GetRateCounter")
+	ret := m.ctrl.Call(m, "GetMessageCounter")
 	ret0, _ := ret[0].(*int64)
 	return ret0
 }
 
-// GetRateCounter indicates an expected call of GetRateCounter
-func (mr *MockMessageProducerMockRecorder) GetRateCounter() *gomock.Call {
+// GetMessageCounter indicates an expected call of GetMessageCounter
+func (mr *MockMessageProducerMockRecorder) GetMessageCounter() *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetRateCounter", reflect.TypeOf((*MockMessageProducer)(nil).GetRateCounter))
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetMessageCounter", reflect.TypeOf((*MockMessageProducer)(nil).GetMessageCounter))
 }
 
 // Close mocks base method
@@ -408,41 +408,41 @@ func (mr *MockBacklogRetrieverMockRecorder) GetBacklog() *gomock.Call {
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetBacklog", reflect.TypeOf((*MockBacklogRetriever)(nil).GetBacklog))
 }
 
-// MockRateCounter is a mock of RateCounter interface
-type MockRateCounter struct {
+// MockDeliveredCounter is a mock of DeliveredCounter interface
+type MockDeliveredCounter struct {
 	ctrl     *gomock.Controller
-	recorder *MockRateCounterMockRecorder
+	recorder *MockDeliveredCounterMockRecorder
 }
 
-// MockRateCounterMockRecorder is the mock recorder for MockRateCounter
-type MockRateCounterMockRecorder struct {
-	mock *MockRateCounter
+// MockDeliveredCounterMockRecorder is the mock recorder for MockDeliveredCounter
+type MockDeliveredCounterMockRecorder struct {
+	mock *MockDeliveredCounter
 }
 
-// NewMockRateCounter creates a new mock instance
-func NewMockRateCounter(ctrl *gomock.Controller) *MockRateCounter {
-	mock := &MockRateCounter{ctrl: ctrl}
-	mock.recorder = &MockRateCounterMockRecorder{mock}
+// NewMockDeliveredCounter creates a new mock instance
+func NewMockDeliveredCounter(ctrl *gomock.Controller) *MockDeliveredCounter {
+	mock := &MockDeliveredCounter{ctrl: ctrl}
+	mock.recorder = &MockDeliveredCounterMockRecorder{mock}
 	return mock
 }
 
 // EXPECT returns an object that allows the caller to indicate expected use
-func (m *MockRateCounter) EXPECT() *MockRateCounterMockRecorder {
+func (m *MockDeliveredCounter) EXPECT() *MockDeliveredCounterMockRecorder {
 	return m.recorder
 }
 
-// GetRateCounter mocks base method
-func (m *MockRateCounter) GetRateCounter() *int64 {
+// GetDeliveredCounter mocks base method
+func (m *MockDeliveredCounter) GetDeliveredCounter() *int64 {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "GetRateCounter")
+	ret := m.ctrl.Call(m, "GetDeliveredCounter")
 	ret0, _ := ret[0].(*int64)
 	return ret0
 }
 
-// GetRateCounter indicates an expected call of GetRateCounter
-func (mr *MockRateCounterMockRecorder) GetRateCounter() *gomock.Call {
+// GetDeliveredCounter indicates an expected call of GetDeliveredCounter
+func (mr *MockDeliveredCounterMockRecorder) GetDeliveredCounter() *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetRateCounter", reflect.TypeOf((*MockRateCounter)(nil).GetRateCounter))
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetDeliveredCounter", reflect.TypeOf((*MockDeliveredCounter)(nil).GetDeliveredCounter))
 }
 
 // MockProvider is a mock of Provider interface

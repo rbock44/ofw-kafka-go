@@ -189,6 +189,11 @@ func (c *BulkConsumer) RunBacklogReporter(intervalMs int) {
 	c.SingleConsumer.RunBacklogReporter(intervalMs)
 }
 
+//RunRateReporter runs the go routine for the rate reporter
+func (c *BulkConsumer) RunRateReporter(intervalMs int) {
+	c.SingleConsumer.RunRateReporter(intervalMs)
+}
+
 //Close closes the bulk consumer and makes sure the underlying simple consumer is closed
 func (c *BulkConsumer) Close() {
 	if c.SingleConsumer != nil {

@@ -110,6 +110,11 @@ func (c *SimpleConsumer) ReadMessage(shutdownCheckInterfaceMs int) (interface{},
 	return key, value, err
 }
 
+//Close closes the underlying consumer implementation
+func (c *SimpleConsumer) Close() {
+	c.Consumer.Close()
+}
+
 //Process receive messages and dispatch to message handler and error handler until shutdown flag is true
 func (c *BulkConsumer) Process() {
 	for {
@@ -125,5 +130,12 @@ func (c *BulkConsumer) Process() {
 		if *c.Shutdown {
 			return
 		}
+	}
+}
+
+//Close closes the bulk consumer and makes sure the underlying simple consumer is closed
+func (c *BulkConsumer) Close() {
+	if c.SimpleConsumer != nil {
+		c.SimpleConsumer.Close()
 	}
 }

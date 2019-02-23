@@ -266,6 +266,18 @@ func (mr *MockMessageConsumerMockRecorder) ReadMessage(timeoutMs, keyWriter, val
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ReadMessage", reflect.TypeOf((*MockMessageConsumer)(nil).ReadMessage), timeoutMs, keyWriter, valueWriter)
 }
 
+// Close mocks base method
+func (m *MockMessageConsumer) Close() {
+	m.ctrl.T.Helper()
+	m.ctrl.Call(m, "Close")
+}
+
+// Close indicates an expected call of Close
+func (mr *MockMessageConsumerMockRecorder) Close() *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Close", reflect.TypeOf((*MockMessageConsumer)(nil).Close))
+}
+
 // MockMessageProducer is a mock of MessageProducer interface
 type MockMessageProducer struct {
 	ctrl     *gomock.Controller
@@ -301,6 +313,18 @@ func (m *MockMessageProducer) SendKeyValue(key, value []byte) error {
 func (mr *MockMessageProducerMockRecorder) SendKeyValue(key, value interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SendKeyValue", reflect.TypeOf((*MockMessageProducer)(nil).SendKeyValue), key, value)
+}
+
+// Close mocks base method
+func (m *MockMessageProducer) Close() {
+	m.ctrl.T.Helper()
+	m.ctrl.Call(m, "Close")
+}
+
+// Close indicates an expected call of Close
+func (mr *MockMessageProducerMockRecorder) Close() *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Close", reflect.TypeOf((*MockMessageProducer)(nil).Close))
 }
 
 // MockBacklogRetriever is a mock of BacklogRetriever interface

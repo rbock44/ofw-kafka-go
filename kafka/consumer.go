@@ -133,10 +133,10 @@ func (c *SingleConsumer) RunBacklogReporter(intervalMs int) {
 func (c *SingleConsumer) RunRateReporter(intervalMs int) {
 	br, err := NewRateReporter(
 		c.Topic,
-		c.Consumer.GetRateCounter(),
+		c.Consumer.GetMessageCounter(),
 		&c.Shutdown,
 		func(name string, rate float64) {
-			fmt.Printf("report rate [%s] [%4.2f]", name, rate)
+			fmt.Printf("report rate [%s] [%4.2f]\n", name, rate)
 		},
 		intervalMs)
 	if err == nil {
@@ -146,7 +146,7 @@ func (c *SingleConsumer) RunRateReporter(intervalMs int) {
 
 //GetRateCounter returns the message counter address to monitor e.g. with the rate limiter
 func (c *SingleConsumer) GetRateCounter() *int64 {
-	return c.Consumer.GetRateCounter()
+	return c.Consumer.GetMessageCounter()
 }
 
 //GetBacklog returns the messages left in the topic

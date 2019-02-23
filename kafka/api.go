@@ -53,6 +53,11 @@ type BacklogRetriever interface {
 	GetBacklog() (backlog int, err error)
 }
 
+//RateCounter delivers the pointer to monitor the count
+type RateCounter interface {
+	GetCounter() *int64
+}
+
 //Provider creates kafa consumer producer based on an implementation
 type Provider interface {
 	NewConsumer(topic string, clientID string) (MessageConsumer, error)

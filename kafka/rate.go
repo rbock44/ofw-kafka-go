@@ -16,9 +16,9 @@ type RateReporter struct {
 }
 
 //NewRateReporter create a RateReporter
-func NewRateReporter(name string, counter *int64, shutdown *bool, logger func(name string, rate float64, shutdown bool), ratePeriodMs int) (*RateReporter, error) {
-	if counter == nil {
-		return nil, fmt.Errorf("counter should not be nil")
+func NewRateReporter(name string, rateCounter RateCounter, shutdown *bool, logger func(name string, rate float64, shutdown bool), ratePeriodMs int) (*RateReporter, error) {
+	if rateCounter == nil {
+		return nil, fmt.Errorf("rateCounter should not be nil")
 	}
 	if shutdown == nil {
 		return nil, fmt.Errorf("shutdown should not be nil")
@@ -26,6 +26,11 @@ func NewRateReporter(name string, counter *int64, shutdown *bool, logger func(na
 
 	if logger == nil {
 		return nil, fmt.Errorf("logger should not be nil")
+	}
+
+	counter := rateCounter.GetCounter()
+	if counter == nil {
+		return nil, fmt.Errorf("rateCounter delivers nil counter")
 	}
 
 	return &RateReporter{

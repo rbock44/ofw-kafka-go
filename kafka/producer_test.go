@@ -38,7 +38,13 @@ func Test_SendKeyValue(t *testing.T) {
 		WriteHeader(gomock.Any()).
 		Times(2)
 
-	producer, err := NewSimpleProducer(m, setupRegistryMock(t, ctrl, nil, nil, nil))
+	f := NewMockProvider(ctrl)
+	f.EXPECT().
+		NewProducer(gomock.Eq("testTopic"), gomock.Eq("testClientID")).
+		Return(m, nil)
+	SetFrameworkFactory(f)
+
+	producer, err := NewSimpleProducer("testTopic", "testClientID", setupRegistryMock(t, ctrl, nil, nil, nil))
 	assert.Nil(t, err)
 
 	key := "test"

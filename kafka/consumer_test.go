@@ -24,7 +24,13 @@ func Test_ReadMessage_KeyValue(t *testing.T) {
 		Return(nil).
 		AnyTimes()
 
-	consumer, err := NewSimpleConsumer(m, setupRegistryMock(t, ctrl, nil, nil, setupDecoder(ctrl)))
+	f := NewMockProvider(ctrl)
+	f.EXPECT().
+		NewConsumer(gomock.Eq("testTopic"), gomock.Eq("testClientID")).
+		Return(m, nil)
+	SetFrameworkFactory(f)
+
+	consumer, err := NewSimpleConsumer("testTopic", "testClientID", setupRegistryMock(t, ctrl, nil, nil, setupDecoder(ctrl)))
 	assert.Nil(t, err)
 
 	_, _, err = consumer.ReadMessage(1000)
@@ -41,7 +47,13 @@ func Test_ReadMessage_NoMessage(t *testing.T) {
 		Return(nil).
 		Times(1)
 
-	consumer, err := NewSimpleConsumer(m, setupRegistryMock(t, ctrl, nil, nil, setupDecoder(ctrl)))
+	f := NewMockProvider(ctrl)
+	f.EXPECT().
+		NewConsumer(gomock.Eq("testTopic"), gomock.Eq("testClientID")).
+		Return(m, nil)
+	SetFrameworkFactory(f)
+
+	consumer, err := NewSimpleConsumer("testTopic", "testClientID", setupRegistryMock(t, ctrl, nil, nil, setupDecoder(ctrl)))
 	assert.Nil(t, err)
 
 	key, value, err := consumer.ReadMessage(1000)
@@ -60,7 +72,13 @@ func Test_ReadMessage_Error(t *testing.T) {
 		Return(fmt.Errorf("read error")).
 		Times(1)
 
-	consumer, err := NewSimpleConsumer(m, setupRegistryMock(t, ctrl, nil, nil, setupDecoder(ctrl)))
+	f := NewMockProvider(ctrl)
+	f.EXPECT().
+		NewConsumer(gomock.Eq("testTopic"), gomock.Eq("testClientID")).
+		Return(m, nil)
+	SetFrameworkFactory(f)
+
+	consumer, err := NewSimpleConsumer("testTopic", "testClientID", setupRegistryMock(t, ctrl, nil, nil, setupDecoder(ctrl)))
 	assert.Nil(t, err)
 
 	key, value, err := consumer.ReadMessage(1000)
@@ -89,14 +107,20 @@ func Test_Process_Shutdown(t *testing.T) {
 		Return(nil).
 		AnyTimes()
 
+	f := NewMockProvider(ctrl)
+	f.EXPECT().
+		NewConsumer(gomock.Eq("testTopic"), gomock.Eq("testClientID")).
+		Return(m, nil)
+	SetFrameworkFactory(f)
+
 	shutdown := NewShutdownManager()
 
 	consumer, err := NewBulkConsumer(
+		"testTopic",
+		"testClientID",
+		setupRegistryMock(t, ctrl, nil, nil, setupDecoder(ctrl)),
 		messageHandler,
-		&SimpleConsumer{
-			Consumer: m,
-			Registry: setupRegistryMock(t, ctrl, nil, nil, setupDecoder(ctrl)),
-		}, 100, &shutdown.ShutdownState)
+		100, &shutdown.ShutdownState)
 	assert.Nil(t, err)
 
 	go consumer.Process()
@@ -118,12 +142,11 @@ func Test_Process_NoMessageHandler(t *testing.T) {
 
 	shutdown := false
 
-	m := NewMockMessageConsumer(ctrl)
-	_, err := NewBulkConsumer(nil,
-		&SimpleConsumer{
-			Consumer: m,
-			Registry: setupRegistryMock(t, ctrl, nil, nil, nil),
-		},
+	_, err := NewBulkConsumer(
+		"testTopic",
+		"testClientID",
+		setupRegistryMock(t, ctrl, nil, nil, nil),
+		nil,
 		100,
 		&shutdown)
 	assert.NotNil(t, err)

@@ -13,10 +13,15 @@ type SimpleProducer struct {
 }
 
 //NewSimpleProducer creates a SimpleProducer
-func NewSimpleProducer(messageProducer MessageProducer, registry Registry) (*SimpleProducer, error) {
-	simpleProducer := SimpleProducer{}
-	simpleProducer.Registry = registry
-	simpleProducer.Producer = messageProducer
+func NewSimpleProducer(topic string, clientID string, registry Registry) (*SimpleProducer, error) {
+	producer, err := fwFactory.NewProducer(topic, clientID)
+	if err != nil {
+		return nil, err
+	}
+	simpleProducer := SimpleProducer{
+		Registry: registry,
+		Producer: producer,
+	}
 
 	return &simpleProducer, nil
 }

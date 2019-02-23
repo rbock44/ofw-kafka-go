@@ -21,9 +21,13 @@ type BulkConsumer struct {
 }
 
 //NewSimpleConsumer creates a SimpleConsumer
-func NewSimpleConsumer(messageConsumer MessageConsumer, registry Registry) (*SimpleConsumer, error) {
+func NewSimpleConsumer(topic string, clientID string, registry Registry) (*SimpleConsumer, error) {
+	consumerImpl, err := fwFactory.NewConsumer(topic, clientID)
+	if err != nil {
+		return nil, err
+	}
 	sc := SimpleConsumer{
-		Consumer: messageConsumer,
+		Consumer: consumerImpl,
 		Registry: registry,
 	}
 
@@ -32,15 +36,18 @@ func NewSimpleConsumer(messageConsumer MessageConsumer, registry Registry) (*Sim
 
 //NewBulkConsumer creates a new BulkConsumer
 func NewBulkConsumer(
+	topic string,
+	clientID string,
+	registry Registry,
 	messageHandler func(key interface{}, value interface{}, err error),
-	simpleConsumer *SimpleConsumer,
 	pollTimeMs int,
 	shutdown *bool) (*BulkConsumer, error) {
 	if messageHandler == nil {
 		return nil, fmt.Errorf("messageHandler is nil")
 	}
-	if simpleConsumer == nil {
-		return nil, fmt.Errorf("simpleConsumer is nil")
+	simpleConsumer, err := NewSimpleConsumer(topic, clientID, registry)
+	if err != nil {
+		return nil, err
 	}
 	bulkConsumer := BulkConsumer{
 		MessageHandler: messageHandler,

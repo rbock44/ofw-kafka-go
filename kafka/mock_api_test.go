@@ -340,3 +340,56 @@ func (mr *MockBacklogRetrieverMockRecorder) GetBacklog() *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetBacklog", reflect.TypeOf((*MockBacklogRetriever)(nil).GetBacklog))
 }
+
+// MockProvider is a mock of Provider interface
+type MockProvider struct {
+	ctrl     *gomock.Controller
+	recorder *MockProviderMockRecorder
+}
+
+// MockProviderMockRecorder is the mock recorder for MockProvider
+type MockProviderMockRecorder struct {
+	mock *MockProvider
+}
+
+// NewMockProvider creates a new mock instance
+func NewMockProvider(ctrl *gomock.Controller) *MockProvider {
+	mock := &MockProvider{ctrl: ctrl}
+	mock.recorder = &MockProviderMockRecorder{mock}
+	return mock
+}
+
+// EXPECT returns an object that allows the caller to indicate expected use
+func (m *MockProvider) EXPECT() *MockProviderMockRecorder {
+	return m.recorder
+}
+
+// NewConsumer mocks base method
+func (m *MockProvider) NewConsumer(topic, clientID string) (MessageConsumer, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "NewConsumer", topic, clientID)
+	ret0, _ := ret[0].(MessageConsumer)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// NewConsumer indicates an expected call of NewConsumer
+func (mr *MockProviderMockRecorder) NewConsumer(topic, clientID interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "NewConsumer", reflect.TypeOf((*MockProvider)(nil).NewConsumer), topic, clientID)
+}
+
+// NewProducer mocks base method
+func (m *MockProvider) NewProducer(topic, clientID string) (MessageProducer, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "NewProducer", topic, clientID)
+	ret0, _ := ret[0].(MessageProducer)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// NewProducer indicates an expected call of NewProducer
+func (mr *MockProviderMockRecorder) NewProducer(topic, clientID interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "NewProducer", reflect.TypeOf((*MockProvider)(nil).NewProducer), topic, clientID)
+}

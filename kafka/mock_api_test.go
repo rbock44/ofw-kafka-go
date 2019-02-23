@@ -266,6 +266,20 @@ func (mr *MockMessageConsumerMockRecorder) ReadMessage(timeoutMs, keyWriter, val
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ReadMessage", reflect.TypeOf((*MockMessageConsumer)(nil).ReadMessage), timeoutMs, keyWriter, valueWriter)
 }
 
+// GetCounter mocks base method
+func (m *MockMessageConsumer) GetCounter() *int64 {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetCounter")
+	ret0, _ := ret[0].(*int64)
+	return ret0
+}
+
+// GetCounter indicates an expected call of GetCounter
+func (mr *MockMessageConsumerMockRecorder) GetCounter() *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetCounter", reflect.TypeOf((*MockMessageConsumer)(nil).GetCounter))
+}
+
 // Close mocks base method
 func (m *MockMessageConsumer) Close() {
 	m.ctrl.T.Helper()
@@ -313,6 +327,20 @@ func (m *MockMessageProducer) SendKeyValue(key, value []byte) error {
 func (mr *MockMessageProducerMockRecorder) SendKeyValue(key, value interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SendKeyValue", reflect.TypeOf((*MockMessageProducer)(nil).SendKeyValue), key, value)
+}
+
+// GetCounter mocks base method
+func (m *MockMessageProducer) GetCounter() *int64 {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetCounter")
+	ret0, _ := ret[0].(*int64)
+	return ret0
+}
+
+// GetCounter indicates an expected call of GetCounter
+func (mr *MockMessageProducerMockRecorder) GetCounter() *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetCounter", reflect.TypeOf((*MockMessageProducer)(nil).GetCounter))
 }
 
 // Close mocks base method
@@ -363,6 +391,43 @@ func (m *MockBacklogRetriever) GetBacklog() (int, error) {
 func (mr *MockBacklogRetrieverMockRecorder) GetBacklog() *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetBacklog", reflect.TypeOf((*MockBacklogRetriever)(nil).GetBacklog))
+}
+
+// MockRateCounter is a mock of RateCounter interface
+type MockRateCounter struct {
+	ctrl     *gomock.Controller
+	recorder *MockRateCounterMockRecorder
+}
+
+// MockRateCounterMockRecorder is the mock recorder for MockRateCounter
+type MockRateCounterMockRecorder struct {
+	mock *MockRateCounter
+}
+
+// NewMockRateCounter creates a new mock instance
+func NewMockRateCounter(ctrl *gomock.Controller) *MockRateCounter {
+	mock := &MockRateCounter{ctrl: ctrl}
+	mock.recorder = &MockRateCounterMockRecorder{mock}
+	return mock
+}
+
+// EXPECT returns an object that allows the caller to indicate expected use
+func (m *MockRateCounter) EXPECT() *MockRateCounterMockRecorder {
+	return m.recorder
+}
+
+// GetCounter mocks base method
+func (m *MockRateCounter) GetCounter() *int64 {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetCounter")
+	ret0, _ := ret[0].(*int64)
+	return ret0
+}
+
+// GetCounter indicates an expected call of GetCounter
+func (mr *MockRateCounterMockRecorder) GetCounter() *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetCounter", reflect.TypeOf((*MockRateCounter)(nil).GetCounter))
 }
 
 // MockProvider is a mock of Provider interface

@@ -483,3 +483,18 @@ func (mr *MockProviderMockRecorder) NewProducer(topic, clientID interface{}) *go
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "NewProducer", reflect.TypeOf((*MockProvider)(nil).NewProducer), topic, clientID)
 }
+
+// NewRegistry mocks base method
+func (m *MockProvider) NewRegistry() (Registry, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "NewRegistry")
+	ret0, _ := ret[0].(Registry)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// NewRegistry indicates an expected call of NewRegistry
+func (mr *MockProviderMockRecorder) NewRegistry() *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "NewRegistry", reflect.TypeOf((*MockProvider)(nil).NewRegistry))
+}

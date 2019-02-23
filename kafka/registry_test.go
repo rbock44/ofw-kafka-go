@@ -31,8 +31,15 @@ func Test_Registry_Register(t *testing.T) {
 
 	var testSchemaFile = "test.avsc"
 
-	testRegistry := setupTestRegistry(ctrl)
-	schema, err := testRegistry.Register(testSchema.Subject, testSchema.Version, testSchemaFile, testDecoder, testEncoder)
+	f := NewMockProvider(ctrl)
+	f.EXPECT().
+		NewSchemaResolver().
+		Return(setupTestResolver(ctrl))
+	SetFrameworkFactory(f)
+
+	registry := NewSchemaRegistry()
+
+	schema, err := registry.Register(testSchema.Subject, testSchema.Version, testSchemaFile, testDecoder, testEncoder)
 	if assert.Nil(t, err) {
 		if assert.NotNil(t, schema) {
 			assert.Equal(t, testSchema, schema)
@@ -44,8 +51,14 @@ func Test_Registry_Lookup(t *testing.T) {
 	ctrl := gomock.NewController(t)
 	defer ctrl.Finish()
 
-	testRegistry := setupTestRegistry(ctrl)
-	schema, err := testRegistry.Lookup(testSchema.Subject, testSchema.Version)
+	f := NewMockProvider(ctrl)
+	f.EXPECT().
+		NewSchemaResolver().
+		Return(setupTestResolver(ctrl))
+	SetFrameworkFactory(f)
+
+	registry := NewSchemaRegistry()
+	schema, err := registry.Lookup(testSchema.Subject, testSchema.Version)
 	if assert.Nil(t, err) {
 		if assert.NotNil(t, schema) {
 			assert.Equal(t, testSchema.ID, schema.ID)
@@ -57,16 +70,22 @@ func Test_Registry_GetSchemaByID(t *testing.T) {
 	ctrl := gomock.NewController(t)
 	defer ctrl.Finish()
 
-	testRegistry := setupTestRegistry(ctrl)
+	f := NewMockProvider(ctrl)
+	f.EXPECT().
+		NewSchemaResolver().
+		Return(setupTestResolver(ctrl))
+	SetFrameworkFactory(f)
+
+	registry := NewSchemaRegistry()
 	var testSchemaFile = "test.avsc"
 
-	schema, err := testRegistry.Register(testSchema.Subject, testSchema.Version, testSchemaFile, testDecoder, testEncoder)
+	schema, err := registry.Register(testSchema.Subject, testSchema.Version, testSchemaFile, testDecoder, testEncoder)
 	if assert.Nil(t, err) {
 		if assert.NotNil(t, schema) {
 			assert.Equal(t, testSchema, schema)
 		}
 	}
-	schema, err = testRegistry.GetSchemaByID(int(testSchema.ID))
+	schema, err = registry.GetSchemaByID(int(testSchema.ID))
 	if assert.Nil(t, err) {
 		if assert.NotNil(t, schema) {
 			assert.Equal(t, testSchema, schema)
@@ -80,16 +99,23 @@ func Test_Registry_GetSchemaByName(t *testing.T) {
 	ctrl := gomock.NewController(t)
 	defer ctrl.Finish()
 
-	testRegistry := setupTestRegistry(ctrl)
+	f := NewMockProvider(ctrl)
+	f.EXPECT().
+		NewSchemaResolver().
+		Return(setupTestResolver(ctrl))
+	SetFrameworkFactory(f)
+
+	registry := NewSchemaRegistry()
+
 	var testSchemaFile = "test.avsc"
 
-	schema, err := testRegistry.Register(testSchema.Subject, testSchema.Version, testSchemaFile, testDecoder, testEncoder)
+	schema, err := registry.Register(testSchema.Subject, testSchema.Version, testSchemaFile, testDecoder, testEncoder)
 	if assert.Nil(t, err) {
 		if assert.NotNil(t, schema) {
 			assert.Equal(t, testSchema, schema)
 		}
 	}
-	schema, err = testRegistry.GetSchemaByName(testSchema.Subject)
+	schema, err = registry.GetSchemaByName(testSchema.Subject)
 	if assert.Nil(t, err) {
 		if assert.NotNil(t, schema) {
 			assert.Equal(t, testSchema, schema)
@@ -142,8 +168,4 @@ func setupTestResolver(ctrl *gomock.Controller) SchemaResolver {
 		Return(int(testSchema.ID), nil).
 		AnyTimes()
 	return resolver
-}
-
-func setupTestRegistry(ctrl *gomock.Controller) *KafkaRegistry {
-	return NewKafkaRegistry(setupTestResolver(ctrl))
 }

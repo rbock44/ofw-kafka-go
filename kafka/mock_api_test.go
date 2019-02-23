@@ -484,17 +484,16 @@ func (mr *MockProviderMockRecorder) NewProducer(topic, clientID interface{}) *go
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "NewProducer", reflect.TypeOf((*MockProvider)(nil).NewProducer), topic, clientID)
 }
 
-// NewRegistry mocks base method
-func (m *MockProvider) NewRegistry() (Registry, error) {
+// NewSchemaResolver mocks base method
+func (m *MockProvider) NewSchemaResolver() SchemaResolver {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "NewRegistry")
-	ret0, _ := ret[0].(Registry)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
+	ret := m.ctrl.Call(m, "NewSchemaResolver")
+	ret0, _ := ret[0].(SchemaResolver)
+	return ret0
 }
 
-// NewRegistry indicates an expected call of NewRegistry
-func (mr *MockProviderMockRecorder) NewRegistry() *gomock.Call {
+// NewSchemaResolver indicates an expected call of NewSchemaResolver
+func (mr *MockProviderMockRecorder) NewSchemaResolver() *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "NewRegistry", reflect.TypeOf((*MockProvider)(nil).NewRegistry))
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "NewSchemaResolver", reflect.TypeOf((*MockProvider)(nil).NewSchemaResolver))
 }

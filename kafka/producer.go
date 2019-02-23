@@ -53,3 +53,8 @@ func (p *SimpleProducer) SendKeyValue(keySchema MessageSchema, key interface{}, 
 func (p *SimpleProducer) GetCounter() *int64 {
 	return p.Producer.GetCounter()
 }
+
+//Close closes the underlying consumer implementation
+func (p *SimpleProducer) Close() {
+	p.Producer.Close()
+}

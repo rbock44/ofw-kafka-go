@@ -12,5 +12,5 @@ bench:
 	cd kafka && $(GO) test -mod=vendor -bench=.
 
 test:
-	cd kafka && $(GO) test
+	cd kafka && $(GO) test -v
 

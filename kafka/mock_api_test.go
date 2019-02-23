@@ -266,18 +266,33 @@ func (mr *MockMessageConsumerMockRecorder) ReadMessage(timeoutMs, keyWriter, val
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ReadMessage", reflect.TypeOf((*MockMessageConsumer)(nil).ReadMessage), timeoutMs, keyWriter, valueWriter)
 }
 
-// GetCounter mocks base method
-func (m *MockMessageConsumer) GetCounter() *int64 {
+// GetRateCounter mocks base method
+func (m *MockMessageConsumer) GetRateCounter() *int64 {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "GetCounter")
+	ret := m.ctrl.Call(m, "GetRateCounter")
 	ret0, _ := ret[0].(*int64)
 	return ret0
 }
 
-// GetCounter indicates an expected call of GetCounter
-func (mr *MockMessageConsumerMockRecorder) GetCounter() *gomock.Call {
+// GetRateCounter indicates an expected call of GetRateCounter
+func (mr *MockMessageConsumerMockRecorder) GetRateCounter() *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetCounter", reflect.TypeOf((*MockMessageConsumer)(nil).GetCounter))
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetRateCounter", reflect.TypeOf((*MockMessageConsumer)(nil).GetRateCounter))
+}
+
+// GetBacklog mocks base method
+func (m *MockMessageConsumer) GetBacklog() (int, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetBacklog")
+	ret0, _ := ret[0].(int)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// GetBacklog indicates an expected call of GetBacklog
+func (mr *MockMessageConsumerMockRecorder) GetBacklog() *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetBacklog", reflect.TypeOf((*MockMessageConsumer)(nil).GetBacklog))
 }
 
 // Close mocks base method
@@ -329,18 +344,18 @@ func (mr *MockMessageProducerMockRecorder) SendKeyValue(key, value interface{}) 
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SendKeyValue", reflect.TypeOf((*MockMessageProducer)(nil).SendKeyValue), key, value)
 }
 
-// GetCounter mocks base method
-func (m *MockMessageProducer) GetCounter() *int64 {
+// GetRateCounter mocks base method
+func (m *MockMessageProducer) GetRateCounter() *int64 {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "GetCounter")
+	ret := m.ctrl.Call(m, "GetRateCounter")
 	ret0, _ := ret[0].(*int64)
 	return ret0
 }
 
-// GetCounter indicates an expected call of GetCounter
-func (mr *MockMessageProducerMockRecorder) GetCounter() *gomock.Call {
+// GetRateCounter indicates an expected call of GetRateCounter
+func (mr *MockMessageProducerMockRecorder) GetRateCounter() *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetCounter", reflect.TypeOf((*MockMessageProducer)(nil).GetCounter))
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetRateCounter", reflect.TypeOf((*MockMessageProducer)(nil).GetRateCounter))
 }
 
 // Close mocks base method
@@ -416,18 +431,18 @@ func (m *MockRateCounter) EXPECT() *MockRateCounterMockRecorder {
 	return m.recorder
 }
 
-// GetCounter mocks base method
-func (m *MockRateCounter) GetCounter() *int64 {
+// GetRateCounter mocks base method
+func (m *MockRateCounter) GetRateCounter() *int64 {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "GetCounter")
+	ret := m.ctrl.Call(m, "GetRateCounter")
 	ret0, _ := ret[0].(*int64)
 	return ret0
 }
 
-// GetCounter indicates an expected call of GetCounter
-func (mr *MockRateCounterMockRecorder) GetCounter() *gomock.Call {
+// GetRateCounter indicates an expected call of GetRateCounter
+func (mr *MockRateCounterMockRecorder) GetRateCounter() *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetCounter", reflect.TypeOf((*MockRateCounter)(nil).GetCounter))
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetRateCounter", reflect.TypeOf((*MockRateCounter)(nil).GetRateCounter))
 }
 
 // MockProvider is a mock of Provider interface

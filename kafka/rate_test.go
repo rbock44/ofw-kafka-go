@@ -58,7 +58,7 @@ func TestRateLimiter_CheckCounterLimitTimeAbove(t *testing.T) {
 
 type testRateCounter struct{ Counter int64 }
 
-func (c *testRateCounter) GetCounter() *int64 { return &c.Counter }
+func (c *testRateCounter) GetRateCounter() *int64 { return &c.Counter }
 
 func TestRateReporter_calculate(t *testing.T) {
 	logger := func(name string, rate float64, shutdown bool) {}

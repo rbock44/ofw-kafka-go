@@ -44,7 +44,7 @@ func Test_SendKeyValue(t *testing.T) {
 		Return(m, nil)
 	SetFrameworkFactory(f)
 
-	producer, err := NewSimpleProducer("testTopic", "testClientID", setupRegistryMock(t, ctrl, nil, nil, nil))
+	producer, err := NewSingleProducer("testTopic", "testClientID", setupRegistryMock(t, ctrl, nil, nil, nil))
 	assert.Nil(t, err)
 
 	key := "test"

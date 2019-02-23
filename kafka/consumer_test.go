@@ -30,7 +30,7 @@ func Test_ReadMessage_KeyValue(t *testing.T) {
 		Return(m, nil)
 	SetFrameworkFactory(f)
 
-	consumer, err := NewSimpleConsumer("testTopic", "testClientID", setupRegistryMock(t, ctrl, nil, nil, setupDecoder(ctrl)))
+	consumer, err := NewSingleConsumer("testTopic", "testClientID", setupRegistryMock(t, ctrl, nil, nil, setupDecoder(ctrl)))
 	assert.Nil(t, err)
 
 	_, _, err = consumer.ReadMessage(1000)
@@ -53,7 +53,7 @@ func Test_ReadMessage_NoMessage(t *testing.T) {
 		Return(m, nil)
 	SetFrameworkFactory(f)
 
-	consumer, err := NewSimpleConsumer("testTopic", "testClientID", setupRegistryMock(t, ctrl, nil, nil, setupDecoder(ctrl)))
+	consumer, err := NewSingleConsumer("testTopic", "testClientID", setupRegistryMock(t, ctrl, nil, nil, setupDecoder(ctrl)))
 	assert.Nil(t, err)
 
 	key, value, err := consumer.ReadMessage(1000)
@@ -78,7 +78,7 @@ func Test_ReadMessage_Error(t *testing.T) {
 		Return(m, nil)
 	SetFrameworkFactory(f)
 
-	consumer, err := NewSimpleConsumer("testTopic", "testClientID", setupRegistryMock(t, ctrl, nil, nil, setupDecoder(ctrl)))
+	consumer, err := NewSingleConsumer("testTopic", "testClientID", setupRegistryMock(t, ctrl, nil, nil, setupDecoder(ctrl)))
 	assert.Nil(t, err)
 
 	key, value, err := consumer.ReadMessage(1000)

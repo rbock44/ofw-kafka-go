@@ -63,7 +63,7 @@ func (p *SingleProducer) SendKeyValue(keySchema MessageSchema, key interface{}, 
 	return nil
 }
 
-//RunRateReporter starts a go routine with the rate reporter
+//RunRateReporter starts the rate reporter should be run in a go routine
 func (p *SingleProducer) RunRateReporter(intervalMs int) {
 	prr, err := NewRateReporter(
 		p.Topic,
@@ -74,7 +74,7 @@ func (p *SingleProducer) RunRateReporter(intervalMs int) {
 		},
 		intervalMs)
 	if err == nil {
-		go prr.Run()
+		prr.Run()
 	}
 }
 

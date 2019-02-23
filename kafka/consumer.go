@@ -114,7 +114,7 @@ func (c *SingleConsumer) ReadMessage(shutdownCheckInterfaceMs int) (interface{},
 	return key, value, err
 }
 
-//RunBacklogReporter runs the go routine for the backlog reporter
+//RunBacklogReporter runs the back log reporter should be run in a go routine
 func (c *SingleConsumer) RunBacklogReporter(intervalMs int) {
 	br, err := NewBacklogReporter(
 		c.Topic,
@@ -129,7 +129,7 @@ func (c *SingleConsumer) RunBacklogReporter(intervalMs int) {
 	}
 }
 
-//RunRateReporter starts a go routine with the rate reporter
+//RunRateReporter starts rate reporter should be run in a go routine
 func (c *SingleConsumer) RunRateReporter(intervalMs int) {
 	br, err := NewRateReporter(
 		c.Topic,

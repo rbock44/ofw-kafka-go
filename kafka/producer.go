@@ -48,3 +48,8 @@ func (p *SimpleProducer) SendKeyValue(keySchema MessageSchema, key interface{}, 
 	}
 	return nil
 }
+
+//GetCounter returns the message counter address to monitor e.g. with the rate limiter
+func (p *SimpleProducer) GetCounter() *int64 {
+	return p.Producer.GetCounter()
+}

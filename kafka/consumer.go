@@ -110,6 +110,11 @@ func (c *SimpleConsumer) ReadMessage(shutdownCheckInterfaceMs int) (interface{},
 	return key, value, err
 }
 
+//GetCounter returns the message counter address to monitor e.g. with the rate limiter
+func (c *SimpleConsumer) GetCounter() *int64 {
+	return c.Consumer.GetCounter()
+}
+
 //Close closes the underlying consumer implementation
 func (c *SimpleConsumer) Close() {
 	c.Consumer.Close()

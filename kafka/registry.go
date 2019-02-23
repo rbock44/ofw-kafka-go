@@ -6,8 +6,6 @@ import (
 	"io"
 	"io/ioutil"
 	"time"
-
-	schemaregistry "github.com/landoop/schema-registry"
 )
 
 //AvroSchema handles schema lookup and codec
@@ -128,40 +126,4 @@ func (s KafkaRegistry) Register(subject string, version int, schemaPath string, 
 	s.SchemasByID[id] = localSchema
 	s.SchemasByName[subject] = localSchema
 	return localSchema, nil
-}
-
-type schemaClientType struct{}
-
-//NewKafkaSchemaResolver creates a schema resolver calling the Kafka Cluster
-func NewKafkaSchemaResolver() SchemaResolver {
-	return &schemaClientType{}
-}
-
-func (c *schemaClientType) GetSchemaBySubject(subject string, version int) (schemaID int, err error) {
-	schema, err := getKafkaSchemaClient().GetSchemaBySubject(subject, version)
-	if err != nil {
-		return 0, err
-	}
-	return schema.ID, nil
-}
-
-func (c *schemaClientType) RegisterNewSchema(subject string, content string) (schemaID int, err error) {
-	id, err := getKafkaSchemaClient().RegisterNewSchema(subject, content)
-	if err != nil {
-		return 0, err
-	}
-	return id, nil
-}
-
-var schemaClient *schemaregistry.Client
-
-func getKafkaSchemaClient() *schemaregistry.Client {
-	var err error
-	if schemaClient == nil {
-		schemaClient, err = schemaregistry.NewClient(schemaregistry.DefaultUrl)
-		if err != nil {
-			panic(fmt.Sprintf("schema registry client creation error [%v]\n", err))
-		}
-	}
-	return schemaClient
 }

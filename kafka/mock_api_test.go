@@ -266,18 +266,18 @@ func (mr *MockMessageConsumerMockRecorder) ReadMessage(timeoutMs, keyWriter, val
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ReadMessage", reflect.TypeOf((*MockMessageConsumer)(nil).ReadMessage), timeoutMs, keyWriter, valueWriter)
 }
 
-// GetRateCounter mocks base method
-func (m *MockMessageConsumer) GetRateCounter() *int64 {
+// GetMessageCounter mocks base method
+func (m *MockMessageConsumer) GetMessageCounter() *int64 {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "GetRateCounter")
+	ret := m.ctrl.Call(m, "GetMessageCounter")
 	ret0, _ := ret[0].(*int64)
 	return ret0
 }
 
-// GetRateCounter indicates an expected call of GetRateCounter
-func (mr *MockMessageConsumerMockRecorder) GetRateCounter() *gomock.Call {
+// GetMessageCounter indicates an expected call of GetMessageCounter
+func (mr *MockMessageConsumerMockRecorder) GetMessageCounter() *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetRateCounter", reflect.TypeOf((*MockMessageConsumer)(nil).GetRateCounter))
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetMessageCounter", reflect.TypeOf((*MockMessageConsumer)(nil).GetMessageCounter))
 }
 
 // GetBacklog mocks base method
@@ -342,20 +342,6 @@ func (m *MockMessageProducer) SendKeyValue(key, value []byte) error {
 func (mr *MockMessageProducerMockRecorder) SendKeyValue(key, value interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SendKeyValue", reflect.TypeOf((*MockMessageProducer)(nil).SendKeyValue), key, value)
-}
-
-// GetMessageCounter mocks base method
-func (m *MockMessageProducer) GetMessageCounter() *int64 {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "GetMessageCounter")
-	ret0, _ := ret[0].(*int64)
-	return ret0
-}
-
-// GetMessageCounter indicates an expected call of GetMessageCounter
-func (mr *MockMessageProducerMockRecorder) GetMessageCounter() *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetMessageCounter", reflect.TypeOf((*MockMessageProducer)(nil).GetMessageCounter))
 }
 
 // Close mocks base method

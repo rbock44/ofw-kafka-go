@@ -74,6 +74,7 @@ func newRateLimiter(limitPerSecond int) *RateLimiter {
 // - check the rate limit
 // - return the time it needs to idle in case message count is reached
 func (r *RateLimiter) Check(checkTime time.Time, messageCount int64) time.Duration {
+	fmt.Printf("Check messageCount [%d] lastResetCount [%d]", messageCount, r.LastResetCount)
 	elapsedTime := checkTime.Sub(r.StartTime)
 	if elapsedTime > time.Second {
 		//reset as second is over

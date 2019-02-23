@@ -56,7 +56,7 @@ func Test_SendKeyValue(t *testing.T) {
 	m.EXPECT().
 		SendKeyValue(gomock.Any(), gomock.Any()).
 		Return(fmt.Errorf("fail"))
-	producer.Producer = m
+	producer.producer = m
 	err = producer.SendKeyValue(keySchema, key, valueSchema, key)
 	assert.NotNil(t, err)
 }

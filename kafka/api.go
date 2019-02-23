@@ -49,7 +49,6 @@ type MessageConsumer interface {
 //MessageProducer interface to abstract message sending and make writing tests simpler
 type MessageProducer interface {
 	SendKeyValue(key []byte, value []byte) error
-	GetMessageCounter() *int64
 	Close()
 }
 

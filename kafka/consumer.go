@@ -151,7 +151,7 @@ func (c *SingleConsumer) GetRateCounter() *int64 {
 
 //GetBacklog returns the messages left in the topic
 func (c *SingleConsumer) GetBacklog() (int, error) {
-	return c.GetBacklog()
+	return c.Consumer.GetBacklog()
 }
 
 //Close closes the underlying consumer implementation

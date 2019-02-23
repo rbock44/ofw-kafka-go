@@ -115,6 +115,11 @@ func (c *SimpleConsumer) GetCounter() *int64 {
 	return c.Consumer.GetCounter()
 }
 
+//GetBacklog returns the messages left in the topic
+func (c *SimpleConsumer) GetBacklog() (int, error) {
+	return c.GetBacklog()
+}
+
 //Close closes the underlying consumer implementation
 func (c *SimpleConsumer) Close() {
 	c.Consumer.Close()
@@ -136,6 +141,11 @@ func (c *BulkConsumer) Process() {
 			return
 		}
 	}
+}
+
+//GetBacklog returns the messages left in the topic
+func (c *BulkConsumer) GetBacklog() (int, error) {
+	return c.SimpleConsumer.GetBacklog()
 }
 
 //Close closes the bulk consumer and makes sure the underlying simple consumer is closed

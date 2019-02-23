@@ -14,7 +14,7 @@ func TestNewBacklogReporter(t *testing.T) {
 	defer ctrl.Finish()
 
 	retrieverMock := NewMockBacklogRetriever(ctrl)
-	logger := func(name string, count int, err error, shutdown bool) {}
+	logger := func(name string, count int, err error) {}
 	shutdown := false
 
 	br, err := NewBacklogReporter("testBacklogReporterName", retrieverMock, logger, &shutdown, 200)
@@ -51,7 +51,7 @@ func TestBackLogReporter_Run(t *testing.T) {
 	var backlogCount int
 	var backlogErr error
 	var shutdownFlag bool
-	logger := func(name string, count int, err error, shutdown bool) {
+	logger := func(name string, count int, err error) {
 		reporterName = name
 		callNum++
 		backlogCount = count

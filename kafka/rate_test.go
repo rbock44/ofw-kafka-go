@@ -61,7 +61,7 @@ type testRateCounter struct{ Counter int64 }
 func (c *testRateCounter) GetRateCounter() *int64 { return &c.Counter }
 
 func TestRateReporter_calculate(t *testing.T) {
-	logger := func(name string, rate float64, shutdown bool) {}
+	logger := func(name string, rate float64) {}
 	shutdown := false
 	rateCounter := &testRateCounter{Counter: 0}
 	rp, err := NewRateReporter("testRateReporter", rateCounter, &shutdown, logger, 200)
@@ -79,7 +79,7 @@ func TestRateReporter_calculate(t *testing.T) {
 	}
 }
 func TestRateReporter_NewRateReporter(t *testing.T) {
-	logger := func(name string, rate float64, shutdown bool) {}
+	logger := func(name string, rate float64) {}
 	shutdown := false
 	rateCounter := &testRateCounter{Counter: 100}
 	_, err := NewRateReporter("testRateReporter", nil, &shutdown, logger, 200)
@@ -99,7 +99,7 @@ func TestRateReporter_Run(t *testing.T) {
 	var reportedShutdown bool
 	var reportedName string
 	rateCounter := &testRateCounter{Counter: 100}
-	rp, err := NewRateReporter("testRateReporter", rateCounter, &shutdown, func(name string, rate float64, shutdown bool) {
+	rp, err := NewRateReporter("testRateReporter", rateCounter, &shutdown, func(name string, rate float64) {
 		reportedName = name
 		reportedShutdown = shutdown
 	}, 200)

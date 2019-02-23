@@ -10,13 +10,13 @@ type RateReporter struct {
 	Name               string
 	Counter            *int64
 	Shutdown           *bool
-	Logger             func(name string, rate float64, shutdown bool)
+	Logger             func(name string, rate float64)
 	RatePeriod         time.Duration
 	PerSecondMultipler float64
 }
 
 //NewRateReporter create a RateReporter
-func NewRateReporter(name string, rateCounter RateCounter, shutdown *bool, logger func(name string, rate float64, shutdown bool), ratePeriodMs int) (*RateReporter, error) {
+func NewRateReporter(name string, rateCounter RateCounter, shutdown *bool, logger func(name string, rate float64), ratePeriodMs int) (*RateReporter, error) {
 	if rateCounter == nil {
 		return nil, fmt.Errorf("rateCounter should not be nil")
 	}
@@ -50,7 +50,7 @@ func (r *RateReporter) Run() {
 		currentCount := *r.Counter
 		rate := r.calculateRatePerSecond(currentCount, lastCount)
 		lastCount = currentCount
-		r.Logger(r.Name, rate, *r.Shutdown)
+		r.Logger(r.Name, rate)
 		if *r.Shutdown {
 			break
 		}

@@ -63,15 +63,15 @@ func (c *testRateCounter) GetRateCounter() *int64 { return &c.Counter }
 func TestRateReporter_calculate(t *testing.T) {
 	logger := func(name string, rate float64) {}
 	shutdown := false
-	rateCounter := &testRateCounter{Counter: 0}
-	rp, err := NewRateReporter("testRateReporter", rateCounter, &shutdown, logger, 200)
+	rateCounter := int64(0)
+	rp, err := NewRateReporter("testRateReporter", &rateCounter, &shutdown, logger, 200)
 	if assert.Nil(t, err) {
 		assert.Equal(t, float64(0.0), rp.calculateRatePerSecond(0, 0))
 		//200ms 100 messages is 500 messages in a second
 		assert.Equal(t, float64(500.0), rp.calculateRatePerSecond(200, 100))
 	}
 
-	rp, err = NewRateReporter("testRateReporter", rateCounter, &shutdown, logger, 2000)
+	rp, err = NewRateReporter("testRateReporter", &rateCounter, &shutdown, logger, 2000)
 	if assert.Nil(t, err) {
 		assert.Equal(t, float64(0.0), rp.calculateRatePerSecond(0, 0))
 		//2 seconds 100 messages is 50 messages in a second
@@ -81,14 +81,14 @@ func TestRateReporter_calculate(t *testing.T) {
 func TestRateReporter_NewRateReporter(t *testing.T) {
 	logger := func(name string, rate float64) {}
 	shutdown := false
-	rateCounter := &testRateCounter{Counter: 100}
+	rateCounter := int64(100)
 	_, err := NewRateReporter("testRateReporter", nil, &shutdown, logger, 200)
 	assert.NotNil(t, err)
-	_, err = NewRateReporter("testRateReporter", rateCounter, nil, logger, 200)
+	_, err = NewRateReporter("testRateReporter", &rateCounter, nil, logger, 200)
 	assert.NotNil(t, err)
-	_, err = NewRateReporter("testRateReporter", rateCounter, &shutdown, nil, 200)
+	_, err = NewRateReporter("testRateReporter", &rateCounter, &shutdown, nil, 200)
 	assert.NotNil(t, err)
-	rr, err := NewRateReporter("testRateReporter", rateCounter, &shutdown, logger, 200)
+	rr, err := NewRateReporter("testRateReporter", &rateCounter, &shutdown, logger, 200)
 	if assert.Nil(t, err) {
 		assert.NotNil(t, rr)
 	}
@@ -98,14 +98,14 @@ func TestRateReporter_Run(t *testing.T) {
 	shutdown := false
 	var reportedShutdown bool
 	var reportedName string
-	rateCounter := &testRateCounter{Counter: 100}
-	rp, err := NewRateReporter("testRateReporter", rateCounter, &shutdown, func(name string, rate float64) {
+	rateCounter := int64(0)
+	rp, err := NewRateReporter("testRateReporter", &rateCounter, &shutdown, func(name string, rate float64) {
 		reportedName = name
 		reportedShutdown = shutdown
 	}, 200)
 	if assert.Nil(t, err) {
 		go rp.Run()
-		rateCounter.Counter = int64(200)
+		rateCounter = int64(200)
 		time.Sleep(time.Millisecond * 300)
 		assert.Equal(t, "testRateReporter", reportedName)
 		assert.False(t, reportedShutdown)

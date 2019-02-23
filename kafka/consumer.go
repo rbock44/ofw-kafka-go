@@ -133,7 +133,7 @@ func (c *SingleConsumer) RunBacklogReporter(intervalMs int) {
 func (c *SingleConsumer) RunRateReporter(intervalMs int) {
 	br, err := NewRateReporter(
 		c.Topic,
-		c.Consumer,
+		c.Consumer.GetRateCounter(),
 		&c.Shutdown,
 		func(name string, rate float64) {
 			fmt.Printf("report rate [%s] [%4.2f]", name, rate)

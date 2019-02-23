@@ -57,8 +57,8 @@ func (p *SingleProducer) SendKeyValue(keySchema MessageSchema, key interface{}, 
 //RunRateReporter starts a go routine with the rate reporter
 func (p *SingleProducer) RunRateReporter(intervalMs int) {
 	prr, err := NewRateReporter(
-		"producer message rate reporter",
-		p,
+		p.Topic,
+		p.GetRateCounter(),
 		&p.Shutdown,
 		func(name string, rate float64) {
 			fmt.Printf("report rate [%s] [%4.2f]\n", p.Topic, rate)

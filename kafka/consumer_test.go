@@ -22,9 +22,8 @@ func Test_ReadMessage_KeyValue(t *testing.T) {
 
 	m := NewMockMessageConsumer(ctrl)
 	m.EXPECT().
-		SetHandler(gomock.Any())
-	m.EXPECT().
 		Process(1000).
+		Return(nil).
 		/*
 			Do(func(timeoutMs int) {
 				keyBuffer := &bytes.Buffer{}
@@ -37,7 +36,7 @@ func Test_ReadMessage_KeyValue(t *testing.T) {
 
 	f := NewMockProvider(ctrl)
 	f.EXPECT().
-		NewConsumer(gomock.Eq("testTopic"), gomock.Eq("testClientID")).
+		NewConsumer(gomock.Eq("testTopic"), gomock.Eq("testClientID"), &testHandler{}).
 		Return(m, nil)
 	SetFrameworkFactory(f)
 
@@ -60,14 +59,13 @@ func Test_Process_Shutdown(t *testing.T) {
 
 	m := NewMockMessageConsumer(ctrl)
 	m.EXPECT().
-		SetHandler(&testHandler{})
-	m.EXPECT().
 		Process(1000).
+		Return(nil).
 		AnyTimes()
 
 	f := NewMockProvider(ctrl)
 	f.EXPECT().
-		NewConsumer(gomock.Eq("testTopic"), gomock.Eq("testClientID")).
+		NewConsumer(gomock.Eq("testTopic"), gomock.Eq("testClientID"), &testHandler{}).
 		Return(m, nil)
 	SetFrameworkFactory(f)
 

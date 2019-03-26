@@ -40,8 +40,7 @@ type Registry interface {
 
 //MessageConsumer interface to abstract message receiving and make writing tests simpler
 type MessageConsumer interface {
-	Process(pollTimeoutMs int)
-	SetHandler(MessageHandler)
+	Process(pollTimeoutMs int) error
 	GetMessageCounter() *int64
 	GetBacklog() (backlog int, err error)
 	Close()
@@ -65,7 +64,7 @@ type DeliveredCounter interface {
 
 //Provider creates kafa consumer producer based on an implementation
 type Provider interface {
-	NewConsumer(topic string, clientID string) (MessageConsumer, error)
+	NewConsumer(topic string, clientID string, handler MessageHandler) (MessageConsumer, error)
 	NewProducer(topic string, clientID string) (MessageProducer, error)
 	NewSchemaResolver() (SchemaResolver, error)
 }

@@ -32,8 +32,7 @@ func NewConsumer(topic string, clientID string, registry Registry, pollTimeMs in
 		return nil, fmt.Errorf("consumer message handler missing")
 	}
 
-	consumerImpl, err := fwFactory.NewConsumer(topic, clientID)
-	consumerImpl.SetHandler(handler)
+	consumerImpl, err := fwFactory.NewConsumer(topic, clientID, handler)
 	if err != nil {
 		return nil, err
 	}

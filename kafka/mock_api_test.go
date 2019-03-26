@@ -253,27 +253,17 @@ func (m *MockMessageConsumer) EXPECT() *MockMessageConsumerMockRecorder {
 }
 
 // Process mocks base method
-func (m *MockMessageConsumer) Process(pollTimeoutMs int) {
+func (m *MockMessageConsumer) Process(pollTimeoutMs int) error {
 	m.ctrl.T.Helper()
-	m.ctrl.Call(m, "Process", pollTimeoutMs)
+	ret := m.ctrl.Call(m, "Process", pollTimeoutMs)
+	ret0, _ := ret[0].(error)
+	return ret0
 }
 
 // Process indicates an expected call of Process
 func (mr *MockMessageConsumerMockRecorder) Process(pollTimeoutMs interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Process", reflect.TypeOf((*MockMessageConsumer)(nil).Process), pollTimeoutMs)
-}
-
-// SetHandler mocks base method
-func (m *MockMessageConsumer) SetHandler(arg0 MessageHandler) {
-	m.ctrl.T.Helper()
-	m.ctrl.Call(m, "SetHandler", arg0)
-}
-
-// SetHandler indicates an expected call of SetHandler
-func (mr *MockMessageConsumerMockRecorder) SetHandler(arg0 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SetHandler", reflect.TypeOf((*MockMessageConsumer)(nil).SetHandler), arg0)
 }
 
 // GetMessageCounter mocks base method
@@ -465,18 +455,18 @@ func (m *MockProvider) EXPECT() *MockProviderMockRecorder {
 }
 
 // NewConsumer mocks base method
-func (m *MockProvider) NewConsumer(topic, clientID string) (MessageConsumer, error) {
+func (m *MockProvider) NewConsumer(topic, clientID string, handler MessageHandler) (MessageConsumer, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "NewConsumer", topic, clientID)
+	ret := m.ctrl.Call(m, "NewConsumer", topic, clientID, handler)
 	ret0, _ := ret[0].(MessageConsumer)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
 // NewConsumer indicates an expected call of NewConsumer
-func (mr *MockProviderMockRecorder) NewConsumer(topic, clientID interface{}) *gomock.Call {
+func (mr *MockProviderMockRecorder) NewConsumer(topic, clientID, handler interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "NewConsumer", reflect.TypeOf((*MockProvider)(nil).NewConsumer), topic, clientID)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "NewConsumer", reflect.TypeOf((*MockProvider)(nil).NewConsumer), topic, clientID, handler)
 }
 
 // NewProducer mocks base method

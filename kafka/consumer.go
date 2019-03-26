@@ -98,7 +98,7 @@ func (c *Consumer) RunBacklogReporter(intervalMs int) {
 		c.Topic,
 		c,
 		func(name string, count int, err error) {
-			fmt.Printf("report backlog [%s] [%d]", name, count)
+			logger.Infof("report backlog [%s] [%d]", name, count)
 		},
 		&c.Shutdown,
 		intervalMs)
@@ -114,7 +114,7 @@ func (c *Consumer) RunRateReporter(intervalMs int) {
 		c.Consumer.GetMessageCounter(),
 		&c.Shutdown,
 		func(name string, rate float64) {
-			fmt.Printf("report rate [%s] [%4.2f]\n", name, rate)
+			logger.Infof("report rate [%s] [%4.2f]\n", name, rate)
 		},
 		intervalMs)
 	if err == nil {
@@ -135,6 +135,7 @@ func (c *Consumer) GetBacklog() (int, error) {
 //Close closes the underlying consumer implementation
 func (c *Consumer) Close() {
 	if c.Consumer != nil {
+		logger.Debugf("Consumer->Close\n")
 		c.Consumer.Close()
 	}
 	//stop limiter and reporter

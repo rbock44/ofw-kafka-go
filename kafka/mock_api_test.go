@@ -252,18 +252,28 @@ func (m *MockMessageConsumer) EXPECT() *MockMessageConsumerMockRecorder {
 	return m.recorder
 }
 
-// ReadMessage mocks base method
-func (m *MockMessageConsumer) ReadMessage(timeoutMs int, keyWriter, valueWriter io.Writer) error {
+// Process mocks base method
+func (m *MockMessageConsumer) Process(pollTimeoutMs int) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "ReadMessage", timeoutMs, keyWriter, valueWriter)
-	ret0, _ := ret[0].(error)
-	return ret0
+	m.ctrl.Call(m, "Process", pollTimeoutMs)
 }
 
-// ReadMessage indicates an expected call of ReadMessage
-func (mr *MockMessageConsumerMockRecorder) ReadMessage(timeoutMs, keyWriter, valueWriter interface{}) *gomock.Call {
+// Process indicates an expected call of Process
+func (mr *MockMessageConsumerMockRecorder) Process(pollTimeoutMs interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ReadMessage", reflect.TypeOf((*MockMessageConsumer)(nil).ReadMessage), timeoutMs, keyWriter, valueWriter)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Process", reflect.TypeOf((*MockMessageConsumer)(nil).Process), pollTimeoutMs)
+}
+
+// SetHandler mocks base method
+func (m *MockMessageConsumer) SetHandler(arg0 MessageHandler) {
+	m.ctrl.T.Helper()
+	m.ctrl.Call(m, "SetHandler", arg0)
+}
+
+// SetHandler indicates an expected call of SetHandler
+func (mr *MockMessageConsumerMockRecorder) SetHandler(arg0 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SetHandler", reflect.TypeOf((*MockMessageConsumer)(nil).SetHandler), arg0)
 }
 
 // GetMessageCounter mocks base method

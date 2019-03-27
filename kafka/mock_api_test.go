@@ -245,6 +245,21 @@ func (mr *MockRegistryMockRecorder) DecodeMessage(context, key, value interface{
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DecodeMessage", reflect.TypeOf((*MockRegistry)(nil).DecodeMessage), context, key, value)
 }
 
+// EncodeMessage mocks base method
+func (m *MockRegistry) EncodeMessage(keySchema MessageSchema, key []byte, valueSchema MessageSchema, value []byte) ([]byte, []byte) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "EncodeMessage", keySchema, key, valueSchema, value)
+	ret0, _ := ret[0].([]byte)
+	ret1, _ := ret[1].([]byte)
+	return ret0, ret1
+}
+
+// EncodeMessage indicates an expected call of EncodeMessage
+func (mr *MockRegistryMockRecorder) EncodeMessage(keySchema, key, valueSchema, value interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "EncodeMessage", reflect.TypeOf((*MockRegistry)(nil).EncodeMessage), keySchema, key, valueSchema, value)
+}
+
 // MockMessageConsumer is a mock of MessageConsumer interface
 type MockMessageConsumer struct {
 	ctrl     *gomock.Controller

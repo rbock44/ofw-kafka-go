@@ -8,6 +8,35 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
+func Test_EncodeMessage(t *testing.T) {
+	/*
+		ctrl := gomock.NewController(t)
+		defer ctrl.Finish()
+
+		keySchema := NewMockMessageSchema(ctrl)
+		keySchema.EXPECT().
+			GetEncoder().
+			Return(setupEncoder(ctrl, 0)).
+			AnyTimes()
+
+		//FIXME currently not used
+		keySchema.EXPECT().
+			WriteHeader(gomock.Any()).
+			Times(0)
+
+		valueSchema := NewMockMessageSchema(ctrl)
+		valueSchema.EXPECT().
+			GetEncoder().
+			Return(setupEncoder(ctrl, 2)).
+			AnyTimes()
+
+		//FIXME currently not used
+		valueSchema.EXPECT().
+			WriteHeader(gomock.Any()).
+			Times(0)
+	*/
+}
+
 func Test_SendKeyValue(t *testing.T) {
 	ctrl := gomock.NewController(t)
 	defer ctrl.Finish()
@@ -18,26 +47,6 @@ func Test_SendKeyValue(t *testing.T) {
 		Return(nil).
 		Times(1)
 
-	keySchema := NewMockMessageSchema(ctrl)
-	keySchema.EXPECT().
-		GetEncoder().
-		Return(setupEncoder(ctrl, 2)).
-		AnyTimes()
-
-	keySchema.EXPECT().
-		WriteHeader(gomock.Any()).
-		Times(2)
-
-	valueSchema := NewMockMessageSchema(ctrl)
-	valueSchema.EXPECT().
-		GetEncoder().
-		Return(setupEncoder(ctrl, 2)).
-		AnyTimes()
-
-	valueSchema.EXPECT().
-		WriteHeader(gomock.Any()).
-		Times(2)
-
 	f := NewMockProvider(ctrl)
 	f.EXPECT().
 		NewProducer(gomock.Eq("testTopic"), gomock.Eq("testClientID")).
@@ -47,8 +56,7 @@ func Test_SendKeyValue(t *testing.T) {
 	producer, err := NewSingleProducer("testTopic", "testClientID")
 	assert.Nil(t, err)
 
-	key := "test"
-	err = producer.SendKeyValue(keySchema, key, valueSchema, key)
+	err = producer.SendKeyValue([]byte{}, []byte{})
 	assert.Nil(t, err)
 
 	//Test failure
@@ -57,6 +65,6 @@ func Test_SendKeyValue(t *testing.T) {
 		SendKeyValue(gomock.Any(), gomock.Any()).
 		Return(fmt.Errorf("fail"))
 	producer.producer = m
-	err = producer.SendKeyValue(keySchema, key, valueSchema, key)
+	err = producer.SendKeyValue([]byte{}, []byte{})
 	assert.NotNil(t, err)
 }

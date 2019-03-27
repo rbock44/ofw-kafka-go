@@ -246,7 +246,7 @@ func (mr *MockRegistryMockRecorder) DecodeMessage(context, key, value interface{
 }
 
 // EncodeMessage mocks base method
-func (m *MockRegistry) EncodeMessage(keySchema MessageSchema, key []byte, valueSchema MessageSchema, value []byte) ([]byte, []byte) {
+func (m *MockRegistry) EncodeMessage(keySchema MessageSchema, key interface{}, valueSchema MessageSchema, value interface{}) ([]byte, []byte) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "EncodeMessage", keySchema, key, valueSchema, value)
 	ret0, _ := ret[0].([]byte)

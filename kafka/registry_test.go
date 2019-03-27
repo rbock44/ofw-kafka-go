@@ -211,7 +211,7 @@ func setupEncoder(ctrl *gomock.Controller, times int) Encoder {
 	return encoder
 }
 
-func setupRegistryMock(t *testing.T, ctrl *gomock.Controller, mockErr error, encoder Encoder, decoder Decoder) Registry {
+func setupRegistryMock(t *testing.T, ctrl *gomock.Controller, mockErr error, encoder Encoder, decoder Decoder) *MockRegistry {
 	ms := NewMockMessageSchema(ctrl)
 
 	ms.EXPECT().

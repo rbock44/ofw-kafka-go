@@ -229,6 +229,22 @@ func (mr *MockRegistryMockRecorder) GetSchemaByID(id interface{}) *gomock.Call {
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetSchemaByID", reflect.TypeOf((*MockRegistry)(nil).GetSchemaByID), id)
 }
 
+// DecodeMessage mocks base method
+func (m *MockRegistry) DecodeMessage(context *MessageContext, key, value []byte) (interface{}, interface{}, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "DecodeMessage", context, key, value)
+	ret0, _ := ret[0].(interface{})
+	ret1, _ := ret[1].(interface{})
+	ret2, _ := ret[2].(error)
+	return ret0, ret1, ret2
+}
+
+// DecodeMessage indicates an expected call of DecodeMessage
+func (mr *MockRegistryMockRecorder) DecodeMessage(context, key, value interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DecodeMessage", reflect.TypeOf((*MockRegistry)(nil).DecodeMessage), context, key, value)
+}
+
 // MockMessageConsumer is a mock of MessageConsumer interface
 type MockMessageConsumer struct {
 	ctrl     *gomock.Controller

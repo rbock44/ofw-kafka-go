@@ -40,7 +40,7 @@ func Test_ReadMessage_KeyValue(t *testing.T) {
 		Return(m, nil)
 	SetFrameworkFactory(f)
 
-	consumer, err := NewConsumer("testTopic", "testClientID", setupRegistryMock(t, ctrl, nil, nil, setupDecoder(ctrl)), 1000, &testHandler{})
+	consumer, err := NewConsumer("testTopic", "testClientID", 1000, &testHandler{})
 	assert.Nil(t, err)
 
 	go consumer.Process()
@@ -74,7 +74,6 @@ func Test_Process_Shutdown(t *testing.T) {
 	consumer, err := NewConsumer(
 		"testTopic",
 		"testClientID",
-		setupRegistryMock(t, ctrl, nil, nil, setupDecoder(ctrl)),
 		1000,
 		&testHandler{})
 	assert.Nil(t, err)
@@ -100,7 +99,6 @@ func Test_Process_NoMessageHandler(t *testing.T) {
 	_, err := NewConsumer(
 		"testTopic",
 		"testClientID",
-		setupRegistryMock(t, ctrl, nil, nil, nil),
 		1000,
 		nil)
 	assert.NotNil(t, err)
